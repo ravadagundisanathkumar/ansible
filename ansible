@@ -4,18 +4,18 @@ put the entry of ip and hostname in /etc/hosts file
 generate ssh key on controller and copy it under authorized keys in node1 and node 2
 install anisble only on controller
 #cd /etc/ansible
-#vim hosts
+#vim hosts              [add only worker hosts]
 [dev-servers]
 worker1-server
 [prod-server]
 worker2-server
 *ping command :- ansible all -m ping
 *ping with desired output :- ansible all -m ping -a data=hello
-*to add user :- ansible all -m user -a 'name=mansi uid=1200 home=/ltimindtree state=present'
-check in target machine using :- cat /etc/passwd | grep -i mansi
-to create a file :- ansible all -m file -a 'path=/tmp/mansi.txt state=touch'
+*to add user :- ansible all -m user -a 'name=sanath uid=1200 home=/ltimindtree state=present'
+check in target machine using :- cat /etc/passwd | grep -i sanath
+to create a file :- ansible all -m file -a 'path=/tmp/sanath.txt state=touch'
 to create a directory :- ansible all -m file -a 'path=/tmp/mydirectory state=directory' 
-to pull something from the target to controller:- ansible worker1-server -m fetch -a 'src=/tmp/mansi.txt dest=/mnt'
+to pull something from the target to controller:- ansible worker1-server -m fetch -a 'src=/tmp/sanath.txt dest=/mnt'
 to copy:- ansible all -m copy -a 'src=/etc/fstab dest=/tmp'
 to see disk info :- ansible all -m command -a 'df -hT'
 to see partition info :- ansible all -m command -a 'fdisk -l'
