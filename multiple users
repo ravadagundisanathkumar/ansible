@@ -1,0 +1,24 @@
+---
+- name: Create a group
+  hosts: all
+  tasks:
+    - name: Create the 'developers' group
+      ansible.builtin.group:
+        name: developers
+        state: present
+
+- name: Add multiple users
+  hosts: all
+  vars:
+    users:
+      - { name: 'user1', password: '{{ "password1" }}', groups: 'developers' }
+      - { name: 'user2', password: '{{ "password2" }}', groups: 'developers' }
+      - { name: 'user3', password: '{{ "password3" }}', groups: 'developers' }
+  tasks:
+    - name: Add users
+      user:
+        name: "{{ item.name }}"
+        password: "{{ item.password }}"
+        groups: "{{ item.groups }}"
+        append: yes
+      loop: "{{ users }}"
