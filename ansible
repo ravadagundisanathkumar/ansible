@@ -152,34 +152,26 @@ make changes in the httpd.conf file
 
 --------ec2 provisioning via ansible-----------------
 create an instance
-#sudo su -
-#yum install ansible* -y
-#mkdir -p /etc/ansible
-#cd /etc/ansible
-#vim ansible.cfg
-#ansible-galaxy collection install amazon.aws
-#cd
-#yum install python* --allowerasing --skip-broken
-#yum install awscli --user --upgrade
-#pip install boto
-#dig google.com
-#cd /etc/ansible
-#ll
-#vim hosts
+sudo su -
+passwd root
+hostnamectl set-hostname ansible.example.com
+ssh-keygen
+vim /etc/ssh/sshd_config
+systemctl restart sshd
+systemctl enable sshd
+ssh-copy-id root@localhost
+yum install python* --allowerasing --skip-broken
+yum install ansible* -y
+pip install boto
+pip install botocore
+dig google.com
+cd /etc/ansible
+ansible-galaxy collection install amazon.aws
+vim hosts
 [localhost]
 localhost
-localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3 
-#ssh-keygen
-#aws configure
- #passwd root
- #vim /etc/ssh/sshd_config
- #systemctl restart sshd
-  #systemctl enable sshd
-  #cd .ssh/
-  #ssh-copy-id root@localhost
-  #cd
-  #cd /etc/ansible
-  #vim ec2.yaml
+ansible_connection=local ansible_python_interpreter=/usr/bin/python3 
+vim ec2.yaml
 ---
 - hosts:  localhost
   vars_files:
@@ -197,7 +189,7 @@ localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
         region: us-east-1
         count: 1
         state: present
-#pip install botocore
+
 
 #ansible-playbook ec2.yaml --syntax-check
 #ansible-playbook ec2.yaml -C
