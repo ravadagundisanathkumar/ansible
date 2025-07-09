@@ -1,0 +1,44 @@
+--------ec2 provisioning via ansible-----------------
+create an instance
+sudo su -
+passwd root
+hostnamectl set-hostname ansible.example.com
+ssh-keygen
+vim /etc/ssh/sshd_config
+systemctl restart sshd
+systemctl enable sshd
+ssh-copy-id root@localhost
+yum install python* --allowerasing --skip-broken
+yum install ansible* -y
+pip install boto
+pip install botocore
+dig google.com
+cd /etc/ansible
+ansible-galaxy collection install amazon.aws
+vim hosts
+------------------
+[localhost]
+localhost
+localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3 
+----------------------
+vim ec2.yaml
+
+---
+- hosts: all
+   tasks:
+    - name: creating Ec2 instance via Ansible
+      amazon.aws.ec2_instance:
+        aws_access_key:access-key
+        aws_secret_key: secret-key
+        instance_type: t2.micro
+        image_id: ami-05ffe3c48a9991133
+        vpc_subnet_id: subnet-017b47dbf37f4fc2e
+        key_name: NEW
+        region: us-east-1
+        count: 1
+        state: present
+
+
+ansible-playbook ec2.yaml --syntax-check
+ansible-playbook ec2.yaml -C
+ansible-playbook ec2.yaml 
