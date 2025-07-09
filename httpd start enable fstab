@@ -1,0 +1,60 @@
+Create a 2 instances 
+
+####### controller ####################
+sudo su -
+hostnamectl set-hostname controller.example.com
+vim /etc/hosts
+ping worker-node ip
+ssh-keygen
+cat .ssh/id_rsa.pub     copy and paste in worker node authorized keys
+yum update
+yum install ansible*
+cd /etc/ansible
+vim hosts
+ansible all -m ping
+vim playbook.yaml
+  
+---
+- name: this is sample playbook
+  hosts: all
+  tasks:
+    - name: installed httpd
+      yum:
+        name: httpd
+        state: latest
+    - name: copied index.html
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+    - name: started httpd
+      systemd:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: copied /etc/fstab
+      copy:
+        src: /etc/fstab
+        dest: /tmp
+  
+vim index.html
+ansible-playbook playbook.yaml --syntax-check
+ansible-playbook playbook.yaml -C
+ansible-playbook playbook.yaml
+  
+########## worker ####################################
+sudo su -
+hostnamectl set-hostname worker.example.com
+vim /etc/hosts
+ping controller ip
+cd .ssh
+vim authorized_keys
+paste copied key from controller
+
+rpmquery httpd
+cd /var/www/html
+cat index.html
+curl http://localhost
+
+paste the public ip of worker node in browser
