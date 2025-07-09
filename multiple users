@@ -1,3 +1,34 @@
+
+---
+- name: create multiple users
+  hosts: all
+  tasks:
+    - name: create multiple users
+      user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - sanjaya
+        - drcula
+        - iraonman
+
+
+---
+- name: create multiple files
+  hosts: all
+  tasks:
+    - name: copy multiple files
+      copy:
+        src: "{{ item }}"
+        dest: /tmp
+      loop:
+        - /etc/passwd
+        - /etc/fstab
+        - /etc/
+
+
+
+
 ---
 - name: Create a group
   hosts: all
