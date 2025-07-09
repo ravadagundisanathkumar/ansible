@@ -53,9 +53,9 @@ vim sample-playbook.yaml
 #ansible-playbook sample-playbook.yaml
 verification on target
 rpmquery httpd
-   31  rpmquery vsftpd
-   32  rpmquery cifs-utils
-   33  cat /etc/passwd | grep -i sachin
+rpmquery vsftpd
+rpmquery cifs-utils
+cat /etc/passwd | grep -i sachin
 
 ----configuring basic apache server ---------
 create 3 instances 
@@ -94,9 +94,9 @@ verify in target machines
 remove the httpd package if installed on the 3 machines
 install on controll machine
  yum install httpd -y
-   48  cd /etc/httpd/conf
-   49  cp httpd.conf /etc/ansible/project-x
-   50  cd
+cd /etc/httpd/conf
+cp httpd.conf /etc/ansible/project-x
+cd
 make a project-x directory in ansible 
 #cd /etc/httpd/conf
 #cp httpd.conf /etc/ansible/project-x
