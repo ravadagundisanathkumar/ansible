@@ -3,6 +3,7 @@ create an instance
 sudo su -
 passwd root
 hostnamectl set-hostname ansible.example.com
+bash
 ssh-keygen
 vim /etc/ssh/sshd_config
 systemctl restart sshd
